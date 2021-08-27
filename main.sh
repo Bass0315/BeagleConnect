@@ -34,12 +34,12 @@ buffer_process=$!
 #Erase flash
 echo "flash erase GD25Q16C 0" > $(ls /dev/ttyACM*)
 sleep 0.1
-grep -w "success" temporary_log&&displayResult||displayResult
+grep -w "success" temporary_log && displayResult || displayResult
 
 #Write flash
 echo "flash write GD25Q16C 0 0x1234" > $(ls /dev/ttyACM*)
 sleep 0.1
-grep -w "OK" temporary_log&&displayResult||displayResult
+grep -w "OK" temporary_log && displayResult || displayResult
 
 # Clear buffer
 echo "" > temporary_log
