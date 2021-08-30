@@ -50,10 +50,10 @@ sleep 0.1
 grep -w "34 12 00 00" temporary_log && displayResult || displayResult
 
 
-#echo "" > temporary_log
+echo "" > temporary_log
 kill -9 "$buffer_process"
 
-# Read iic address
+# Read iic address (The feedback of this command cannot be displayed normally in the temporary file.)
 echo "i2c scan I2C_0" > $(ls /dev/ttyACM*)
 sleep 0.1
 cat $(ls /dev/ttyACM*)
