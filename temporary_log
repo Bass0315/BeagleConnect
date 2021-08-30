@@ -1,0 +1,13 @@
+
+001:db8::1[0m
+[1;32muart:~$ [mflash erase GD25Q16C 0
+Erase success.
+[1;32muart:~$ [m[8D[J[00:00:00.113,891] [1;31m<err> sensortest: failed to open device PARTICULATE[0m
+[1;32muart:~$ [m[8D[J[00:00:00.113,891] [0m<inf> sensortest: opening device I2CDEVICE[0m
+[1;32muart:~$ [m[8D[J[1;32muart:~$ [mflash write GD25Q16C 0 0x1234
+Write OK.
+Verified.
+[1;32muart:~$ [mflash read GD25Q16C 0 4
+00000000: 34 12 00 00                                      |4...             |
+
+[1;32muart:~$ [m
