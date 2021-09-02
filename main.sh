@@ -19,6 +19,9 @@ function displayResult(){
 # Download firmware		
 python usb_downloadfirmware.py
 
+# ADC power
+python iicadc_ads1115.py
+
 # Config serial
 stty -F $(ls /dev/ttyACM*) raw speed 115200
 stty -F $(ls /dev/ttyACM*) raw speed 115200
