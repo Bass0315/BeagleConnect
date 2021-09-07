@@ -6,6 +6,8 @@ import shlex
 import serial
 from serial.tools import list_ports
 from time import sleep
+# import RPi.GPIO as GPIO
+import pigpio
 #from FileControl import fileOperate
 
 msp430_command = r"sudo python2 -m msp430.bsl5.hid -e -P  usb_uart_bridge.hex"
@@ -49,13 +51,22 @@ def displayResult(flag):
         print ("- - - - - - - - - - - - - - - - - - - -") 
 
 
+timeout_command("sudo pigpiod", 10)
+print (time.strftime(" %H:%M:%S ", time.localtime()) + "< Please press the Boot button. >")
+pigpio.pi().write(4,1)
+sleep(5)
+pigpio.pi().write(4,0)
+print (time.strftime(" %H:%M:%S ", time.localtime()) + "< Please release the Boot button. >")
+sleep(5)
+
+
 #USB download msp430 firmware
 if timeout_command(msp430_command, 10) == 0:
     #print (time.strftime(" %H:%M:%S ", time.localtime()) + "!!!!DEBUG!!!!" + str(Comunicate)) 
     if "OK" in str(Comunicate):
         print (time.strftime(" %H:%M:%S ", time.localtime()) + "USB download msp430 firmware completed")
         displayResult(True)
-        print (time.strftime(" %H:%M:%S ", time.localtime()) + "< The board need to power on again. >")
+        print (time.strftime(" %H:%M:%S ", time.localtime()) + "< The board is powering up again. >")
     else:
         #print (time.strftime(" %H:%M:%S ", time.localtime()) + " ! DEBUG ! ")
         print (time.strftime(" %H:%M:%S ", time.localtime()) + "USB download msp430 firmware failed")
@@ -64,7 +75,11 @@ else:
     print (time.strftime(" %H:%M:%S ", time.localtime()) + "USB download msp430 firmware failed")
     displayResult(False)
 
-sleep(10)   #The board is powered on again.
+pigpio.pi().write(4,1)
+sleep(2)   #The board is powered on again.
+pigpio.pi().write(4,0)
+sleep(2)   #The board is powered on again.
+
 
 #USB download cc1352 firmware
 if timeout_command(cc1352_command, 50) == 0:
@@ -80,11 +95,4 @@ else:
     print (time.strftime(" %H:%M:%S ", time.localtime()) + "USB download cc1352 firmware failed")
     displayResult(False)   
 
-
-#Flash test
-# if timeout_command("cat $(ls /dev/ttyACM*)", 50) == 0:
-    # print (time.strftime(" %H:%M:%S ", time.localtime()) + str(Comunicate)) 
-# else:
-    # print (time.strftime(" %H:%M:%S ", time.localtime()) + "USB download cc1352 firmware failed")
-    # displayResult(False)  
     

@@ -18,7 +18,7 @@ GAIN = 4
 
 re_sat = False
 
-print('Reading ADS1x15 values, press Ctrl-C to quit...')
+print(' ADC ADS1x15 values ')
 # Print nice channel column headers.
 print('| {0:>6} | {1:>6} | {2:>6} | {3:>6} |'.format(*range(4)))
 print('-' * 37)
@@ -49,12 +49,12 @@ for i in range(5):
         values[i] = (values[i] / 10 * 2 - 2000)/10000.0
         
         #print (time.strftime(" %H:%M:%S ", time.localtime()) + "!!!!DEBUG!!!!" + str(i == 0 and 3.3-3.3*0.05 < values[i] and values[i] < 3.3+3.3*0.05))
-        if i == 0 :
+        if i == 1 :
             if 3.3-3.3*0.05 < values[i] and values[i] < 3.3+3.3*0.05 :
                 re_sat = True
             else:
                 re_sat = False
-        if i == 1 :
+        if i == 0 :
             if 5-5*0.05 < values[i] and values[i] < 5+5*0.05 :
                 re_sat = True
             else:

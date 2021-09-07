@@ -30,6 +30,9 @@ stty -F $(ls /dev/ttyACM*) raw speed 115200
 # Clear buffer
 echo "" > temporary_log
 
+#gpio
+./gpio.sh
+
 # Background buffer
 cat $(ls /dev/ttyACM*) >> temporary_log &
 buffer_process=$!
@@ -44,24 +47,18 @@ echo "flash write GD25Q16C 0 0x1234" > $(ls /dev/ttyACM*)
 sleep 0.3
 grep -w "OK" temporary_log && displayResult || displayResult
 
-# Clear buffer
-
-
 # Read flash
 echo "flash read GD25Q16C 0 4" > $(ls /dev/ttyACM*)
 sleep 0.1
 grep -w "34 12 00 00" temporary_log && displayResult || displayResult
 
 
-#echo "" > temporary_log
-kill -9 "$buffer_process"
+kill -9 "$buffer_process"  # The data format of IIC cannot be displayed normally in the temporary log.
 
 # Read iic address
 echo "i2c scan I2C_0" > $(ls /dev/ttyACM*)
 sleep 0.1
 cat $(ls /dev/ttyACM*)
-
-./gpio.sh
 
 
 

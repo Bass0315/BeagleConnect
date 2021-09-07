@@ -7,16 +7,16 @@ for i in $(seq 0 $((${#chip_gpio[*]}-1)))
 do
 	command="gpio conf GPIO_0 ${chip_gpio[$i]} out"
     echo ${command} > $(ls /dev/ttyACM*)
-	command="gpio set GPIO_0 ${chip_gpio[$i]} 1"
+	command="gpio set GPIO_0 ${chip_gpio[$i]} 0"
 	echo ${command} > $(ls /dev/ttyACM*)
     # do something....
 done
 
-sleep 2
+sleep 10
 
 # reset gpio
 for i in $(seq 0 $((${#chip_gpio[*]}-1))) 
 do
-	command="gpio set GPIO_0 ${chip_gpio[$i]} 0"
+	command="gpio set GPIO_0 ${chip_gpio[$i]} 1"
 	echo ${command} > $(ls /dev/ttyACM*)
 done
